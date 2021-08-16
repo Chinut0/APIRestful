@@ -24,13 +24,15 @@ class UserFactory extends Factory
     {
         static $password;
 
+        $verified = $this->faker->randomElement([User::USUARIO_VERIFICADO, User::USUARIO_NO_VERIFICADO]);
+
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'password' => $password ?: $password = bcrypt('secret'),
             'remember_token' => Str::random(10),
-            'verified' => $this->faker->randomElement([User::USUARIO_VERIFICADO, User::USUARIO_NO_VERIFICADO]),
-            'verification_token' => User::USUARIO_VERIFICADO ? null : User::generarVerificationToken(),
+            'verified' => $verified,
+            'verification_token' => $verified ? null : User::generarVerificationToken(),
             'admin' => $this->faker->randomElement([User::USUARIO_ADMINISTRADOR, User::USUARIO_REGULAR]),
         ];
     }
