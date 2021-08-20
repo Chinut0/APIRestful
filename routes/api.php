@@ -25,7 +25,7 @@ use App\Http\Controllers\Category\CategoryTransactionController;
 use App\Http\Controllers\Transaction\TransactionSellerController;
 use App\Http\Controllers\Product\ProductBuyerTransactionController;
 use App\Http\Controllers\Transaction\TransactionCategoryController;
-
+use Laravel\Passport\Http\Controllers\AccessTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,3 +78,6 @@ Route::resource('sellers.products', SellerProductController::class, ['except' =>
 Route::resource('users', UserController::class, ['except' => ['create', 'edit']]);
 Route::name('verify')->get('users/verify/{token}', [UserController::class, 'verify']);
 Route::name('resend')->get('users/{user}/resend', [UserController::class, 'resend']);
+
+//Cambio la ruta Oauth para usar el middleware de api
+Route::post('oauth/token', [AccessTokenController::class, 'issueToken']);

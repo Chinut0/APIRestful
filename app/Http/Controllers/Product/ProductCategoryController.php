@@ -14,7 +14,10 @@ class ProductCategoryController extends ApiController
     {
         parent::__construct();
 
-        $this->middleware('transform.input:' . CategoryTransformer::class)->only(['store', 'update']);
+        $this->middleware('client.credentials')->only(['index']);
+        $this->middleware('auth:api')->except(['index']);
+
+        $this->middleware('transform.input:' . CategoryTransformer::class)->only(['index', 'update']);
     }
 
     /**
